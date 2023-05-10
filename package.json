@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "test": "jest",
-    "cli.js": "node ./dist/cli.js"
+    "rotate": "node ./dist/cli.js"
   },
   "keywords": [],
   "author": "",
