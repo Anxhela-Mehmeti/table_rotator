@@ -44,15 +44,37 @@ export const rotate2DTableLeft = (inputTable: number[][]): number[][] => {
     }
   }
 
-  return outputTable;
+  return outputTable as number[][];
 };
 
 export const convert2DArrayToLinear = (table: number[][]): number[] => {
   return [].concat.apply([], table);
 };
 
-export const rotateLeftLinearArrayAndConvertTo2D = (inputArray: number[]) => {
+export const rotateLinearArrayAndConvertTo2D = (inputArray: number[]): number[] => {
   const table = converLinearArrayTo2D(inputArray);
   const rotatedTable = rotate2DTableLeft(table);
   const rotatedLinearArray = convert2DArrayToLinear(rotatedTable);
+  return rotatedLinearArray;
+};
+
+export const readManipulateAndPrepareLine = (row: Input) => {
+  const id = row.id;
+  let status = true;
+  let rotatedArray: number[] = [];
+  
+  try {
+    const inputArr = JSON.parse(row.json);
+    rotatedArray = rotateLinearArrayAndConvertTo2D(inputArr);
+  } catch (error) {
+    status = false;
+  }
+  const result = [
+    id,
+    `"${JSON.stringify(rotatedArray)}"`,
+    status,
+    "\n",
+  ].join(",");
+
+  return result;
 };
